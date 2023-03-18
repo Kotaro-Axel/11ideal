@@ -1,4 +1,6 @@
 import random
+from ideal import JugadorIdeal
+import numpy as np
 
 # Atributos de los jugadores
 GENES = ["altura", "agilidad", "reflejos", "velocidad", "técnica", 
@@ -11,16 +13,68 @@ POSICIONES = {
     "Delantero": GENES
 }
 
+#Arrays de jugadores generados pos posicion (20 jugadores por arreglo)
+Porteros=[]
+Defensas=[]
+Medios=[]
+Delanteros=[]
+
+#Clase con el Jugador Ideal de cada posicion
+Modelo = JugadorIdeal
+
+
 # definir la población
 def generar_jugador():
     jugador = {}
     for posicion, caracteristicas in POSICIONES.items():
         jugador[posicion] = {}
         for caracteristica in caracteristicas:
-            jugador[posicion][caracteristica] = random.uniform(0, 1)
+            jugador[posicion][caracteristica] = random.uniform(0.1, 0.99)
+    Porteros.append(jugador.get("Portero"))
+    Defensas.append(jugador.get("Defensa"))
+    Medios.append(jugador.get("Medio"))
+    Delanteros.append(jugador.get("Delantero"))
     return jugador
 
 POBLACION_INICIAL = [generar_jugador() for _ in range(20)]
+
+#Ejemplo para optener el portero en la posicion 1 y su atributo "altura"
+#print("Porteros :", Porteros[1]["altura"
+#---------------------------------------------------
+
+
+
+#Ejemplo para Obtener todos los jugadores en la lista de medios y comparalos por genes.
+#Funcion para evaluar Todos los jugadores de una posicion con el jugador ideal de esa posicion en base a sus genes
+def evaluarJugadorModelo(jugadores):
+    for medio in Medios:
+        #print("Jugador : " , jugador)
+        for genes in GENES:
+            jugador = np.round(medio[genes], 2)
+            modelo = np.round(Modelo.Medio[genes],2)
+
+#Suma todos los valores de las caracteristicas de un jugador y retorna la suma
+def evaluarJugador(jugador):
+    puntaje=0
+    for genes in GENES:
+        caracteristicas = np.round(jugador[genes], 2)
+        puntaje += caracteristicas
+    return puntaje
+
+#Funcion inconclusa, seleccion de los mejores jugadores
+def seleccionar():       
+    #ejemplo de evaluacion
+    #se evalua cada jugador del arreglo de "Medios"
+    evaluaciones = [evaluarJugador(medio) for medio in Medios]
+    #print(np.round(evaluaciones,2))
+    #Se imprime el valor maximo hayado (valor maximo de la suma de la funcion evaluarJugador())
+    print(max(evaluaciones))
+    #Se imprime la posicion del jugador hayado con el valor maximo en la suma
+    print("Max :", evaluaciones.index(max(evaluaciones)))
+    #Se imprime todo el jugador (diccionario de jugador con sus caracteristicas)
+    print(Medios[evaluaciones.index(max(evaluaciones))])
+
+
 
 # definir la función de evaluación (puntaje)
 def evaluar(jugador):
@@ -31,6 +85,7 @@ def evaluar(jugador):
             posicion_puntaje += jugador[posicion][caracteristica]
         puntaje += posicion_puntaje
     return puntaje
+
 
 def seleccionar(poblacion):
     evaluaciones = [evaluar(jugador) for jugador in poblacion]
