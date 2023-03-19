@@ -39,7 +39,7 @@ def generar_jugador():
 POBLACION_INICIAL = [generar_jugador() for _ in range(20)]
 
 #Ejemplo para optener el portero en la posicion 1 y su atributo "altura"
-#print("Porteros :", Porteros[1]["altura"
+#print("Porteros :", Porteros[1]["altura"])
 #---------------------------------------------------
 
 
@@ -149,11 +149,18 @@ mejor_jugador = algoritmo_genetico(POBLACION_INICIAL, PROBABILIDAD_MUTACION, NUM
 
 # imprimir el equipo resultante
 print("Equipo:")
-for posicion in POSICIONES.keys():
-    caracteristicas = mejor_jugador[posicion]
-    print(f"{posicion}:")
-    for caracteristica, valor in caracteristicas.items():
-        print(f" - {caracteristica}: {valor:.2f}")
+player=[]
+
+def createplayer():
+    for posicion in POSICIONES.keys():
+        caracteristicas = mejor_jugador[posicion]
+        print(f"{posicion}:")
+        for caracteristica, valor in caracteristicas.items():
+            print(f" - {caracteristica}: {valor:.2f}")
+            player.append(valor)
+    print(player.__len__())
+    return player  
+
 
 #Ejemplo de jugador generado
 #""""'Portero': 

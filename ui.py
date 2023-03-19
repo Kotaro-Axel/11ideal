@@ -1,25 +1,19 @@
 import matplotlib.pyplot as plt
-x = [0.30397156960088567, 
-    0.5470272081147906,
-    0.47055859397806765, 
-    0.7640728378419078, 
-    0.9688119228795901, 
-    0.10856785725595852, 
-    0.900921325488214, 
-    0.049082822994364284, 
-    0.9343541306300858,
-    0.7991211411944863,
-    ]
 import numpy as np
-
-import matplotlib.pyplot as plt
+from ideal import JugadorIdeal
 from matplotlib.patches import Circle, RegularPolygon
 from matplotlib.path import Path
 from matplotlib.projections.polar import PolarAxes
 from matplotlib.projections import register_projection
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
+from app import createplayer
 
+
+Portero_ideal = list(JugadorIdeal.Portero.values())
+Defensa_ideal = list(JugadorIdeal.Defensa.values())
+Medio_ideal = list(JugadorIdeal.Medio.values())
+Delantero_ideal = list(JugadorIdeal.Delantero.values())
 
 def radar_factory(num_vars, frame='circle'):
     """
@@ -111,7 +105,7 @@ def radar_factory(num_vars, frame='circle'):
     return theta
 
 
-def example_data():
+def example_data(player):
     # The following data is from the Denver Aerosol Sources and Health study.
     # See doi:10.1016/j.atmosenv.2008.12.017
     #
@@ -134,91 +128,24 @@ def example_data():
     data = [
         ['Altura', 'Agilidad', 'Reflejos', 'Velocidad', 'Técnica', 'Visión', 'Físico', 'PPP', 'Distancia de lanzamiento','Distancia de tiro'],
         ('Portero', [
-            [0.8, 
-    0.6,
-    0.5, 
-    0.8, 
-    0.97, 
-    0.2, 
-    0.95, 
-    0.2, 
-    0.95,
-    0.85,
-    ],[0.30397156960088567, 
-    0.5470272081147906,
-    0.47055859397806765, 
-    0.7640728378419078, 
-    0.9688119228795901, 
-    0.10856785725595852, 
-    0.900921325488214, 
-    0.049082822994364284, 
-    0.9343541306300858,
-    0.7991211411944863,
-    ],]),
+            Portero_ideal,player[0:10],]),
         ('Defensa', [
-            [0.8, 
-    0.6,
-    0.5, 
-    0.8, 
-    0.97, 
-    0.2, 
-    0.95, 
-    0.2, 
-    0.95,
-    0.85,
-    ],[0.30397156960088567, 
-    0.5470272081147906,
-    0.47055859397806765, 
-    0.7640728378419078, 
-    0.9688119228795901, 
-    0.10856785725595852, 
-    0.900921325488214, 
-    0.049082822994364284, 
-    0.9343541306300858,
-    0.7991211411944863,
-    ],
-    [0.5, 
-    0.6,
-    0.4, 
-    0.8, 
-    0.77, 
-    0.6, 
-    0.95, 
-    0.2, 
-    0.95,
-    0.85,
-    ],[0.30397156960088567, 
-    0.5470272081147906,
-    0.47055859397806765, 
-    0.7640728378419078, 
-    0.9688118484228795901, 
-    0.48485725595852, 
-    0.125488214, 
-    0.649082822994364284, 
-    0.9343541306300858,
-    0.7991211411944863,
-    ],]),
-        ('Basecase', [
-            [0.30397156960088567, 
-    0.5470272081147906,
-    0.47055859397806765, 
-    0.7640728378419078, 
-    0.9688119228795901, 
-    0.10856785725595852, 
-    0.900921325488214, 
-    0.049082822994364284, 
-    0.9343541306300858,
-    0.7991211411944863,
-    ],]),
+            Defensa_ideal,player[10:20],]),
+        ('Medio', [
+            Medio_ideal,player[20:30],]),
+    ('Delantero', [
+            Delantero_ideal,player[30:40],])
     ]
     return data
+
 
 
 if __name__ == '__main__':
     N = 10
     theta = radar_factory(N, frame='polygon')
-
-    data = example_data()
+    player =[]
+    player=createplayer()
+    data = example_data(player)
     spoke_labels = data.pop(0)
 
     fig, axs = plt.subplots(figsize=(9, 9), nrows=2, ncols=2,
@@ -237,11 +164,11 @@ if __name__ == '__main__':
         ax.set_varlabels(spoke_labels)
 
     # add legend relative to top-left plot
-    labels = ('modelo', 'Jugador 1', 'Jugador 2', 'Factor 4', 'Factor 5')
+    labels = ('modelo', 'Jugador 1', 'Jugador 2', 'Jugador 3', 'Jugador 4')
     legend = axs[0, 0].legend(labels, loc=(0.9, .95),
                               labelspacing=0.1, fontsize='small')
 
-    fig.text(0.5, 0.965, '5-Factor Solution Profiles Across Four Scenarios',
+    fig.text(0.5, 0.965, 'Comparativa de jugadores',
              horizontalalignment='center', color='black', weight='bold',
              size='large')
 
