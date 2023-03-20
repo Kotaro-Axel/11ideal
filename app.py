@@ -1,5 +1,6 @@
 import random
 from ideal import JugadorIdeal
+import math
 import numpy as np
 
 # Atributos de los jugadores
@@ -29,7 +30,7 @@ def generar_jugador():
     for posicion, caracteristicas in POSICIONES.items():
         jugador[posicion] = {}
         for caracteristica in caracteristicas:
-            jugador[posicion][caracteristica] = random.uniform(0.1, 0.99)
+            jugador[posicion][caracteristica] = random.uniform(0.49, 0.99)
     Porteros.append(jugador.get("Portero"))
     Defensas.append(jugador.get("Defensa"))
     Medios.append(jugador.get("Medio"))
@@ -38,8 +39,23 @@ def generar_jugador():
 
 POBLACION_INICIAL = [generar_jugador() for _ in range(20)]
 
+def jugador_mas_similar(jugadores, jugador_ideal):
+    similitud_max = -math.inf
+    jugador_mas_similar = None
+    for jugador in jugadores:
+        similitud = 0
+        for caracteristica in GENES:
+                similitud += abs(jugador[caracteristica] - jugador_ideal[caracteristica])
+        if similitud > similitud_max:
+            similitud_max = similitud
+            jugador_mas_similar = jugador
+    return jugador_mas_similar
+
+jugador_mas_parecido = jugador_mas_similar(Porteros, JugadorIdeal.Portero)
+print(jugador_mas_parecido)
+
 #Ejemplo para optener el portero en la posicion 1 y su atributo "altura"
-#print("Porteros :", Porteros[1]["altura"])
+#print("Porteros :", Porteros[1]["altura"
 #---------------------------------------------------
 
 
@@ -75,7 +91,7 @@ def seleccionar():
     print(Medios[evaluaciones.index(max(evaluaciones))])
 
 
-
+#------------------------------------------------------------------------
 # definir la función de evaluación (puntaje)
 def evaluar(jugador):
     puntaje = 0
@@ -131,6 +147,7 @@ def algoritmo_genetico(poblacion, probabilidad_mutacion, num_generaciones):
         # mutación
         for i in range(len(nueva_poblacion)):
             nueva_poblacion[i] = mutar(nueva_poblacion[i], probabilidad_mutacion)
+            print(nueva_poblacion[i])
         
         # reemplazo
         poblacion = seleccionados + nueva_poblacion
@@ -146,21 +163,14 @@ POBLACION_INICIAL = [generar_jugador() for _ in range(20)]
 PROBABILIDAD_MUTACION = 0.4
 NUM_GENERACIONES = 10
 mejor_jugador = algoritmo_genetico(POBLACION_INICIAL, PROBABILIDAD_MUTACION, NUM_GENERACIONES)
-
+print(len(mejor_jugador), mejor_jugador)
 # imprimir el equipo resultante
 print("Equipo:")
-player=[]
-
-def createplayer():
-    for posicion in POSICIONES.keys():
-        caracteristicas = mejor_jugador[posicion]
-        print(f"{posicion}:")
-        for caracteristica, valor in caracteristicas.items():
-            print(f" - {caracteristica}: {valor:.2f}")
-            player.append(valor)
-    print(player.__len__())
-    return player  
-
+for posicion in POSICIONES.keys():
+    caracteristicas = mejor_jugador[posicion]
+    print(f"{posicion}:")
+    for caracteristica, valor in caracteristicas.items():
+        print(f" - {caracteristica}: {valor:.2f}")
 
 #Ejemplo de jugador generado
 #""""'Portero': 
