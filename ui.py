@@ -7,7 +7,7 @@ from matplotlib.projections.polar import PolarAxes
 from matplotlib.projections import register_projection
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
-from app import createplayer
+from test import genetico
 
 
 Portero_ideal = list(JugadorIdeal.Portero.values())
@@ -138,14 +138,25 @@ def example_data(player):
     ]
     return data
 
+def create_player(player):
+    posiciones = ["Portero", "Defensa", "Medio", "Delantero"]
+    mejores_jugadores=[]
+    for posicion in posiciones:
+        caracteristicas = player[(posiciones.index(posicion))]
+        for caracteristica, valor in caracteristicas.items():
+            mejores_jugadores.append(valor)
+            
+            
+    return mejores_jugadores
 
 
 if __name__ == '__main__':
     N = 10
     theta = radar_factory(N, frame='polygon')
     player =[]
-    player=createplayer()
-    data = example_data(player)
+    player=genetico(0.4,10)
+    players=create_player(player)
+    data = example_data(players)
     spoke_labels = data.pop(0)
 
     fig, axs = plt.subplots(figsize=(9, 9), nrows=2, ncols=2,

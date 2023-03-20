@@ -112,10 +112,14 @@ def genetico(probabilidad_mutacion, num_generaciones):
     return mejores
 
 
-PROBABILIDAD_MUTACION = 0.4
-NUM_GENERACIONES = 10
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
+# PROBABILIDAD_MUTACION = 0.4
+# NUM_GENERACIONES = 10
+# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
+# posiciones = ["Portero", "Defensa", "Medio", "Delantero"]
+# print("Equipo:")
 
-print("Equipo:")
-for jugador in mejores_jugadores:
-    print(f"{jugador}")
+# for posicion in posiciones:
+#     caracteristicas = mejores_jugadores[(posiciones.index(posicion))]
+#     print(f"{posicion}:")
+#     for caracteristica, valor in caracteristicas.items():
+#         print(f" - {caracteristica}: {valor:.2f}")
