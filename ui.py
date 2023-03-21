@@ -8,6 +8,7 @@ from matplotlib.projections import register_projection
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
 from test import genetico
+from itertools import chain
 
 
 Portero_ideal = list(JugadorIdeal.Portero.values())
@@ -128,22 +129,29 @@ def example_data(player):
     data = [
         ['Altura', 'Agilidad', 'Reflejos', 'Velocidad', 'Técnica', 'Visión', 'Físico', 'PPP', 'Distancia de lanzamiento','Distancia de tiro'],
         ('Portero', [
-            Portero_ideal,player[0:10],]),
+            Portero_ideal,player[0:10],player[10:20],player[20:30],player[30:40]]),
         ('Defensa', [
-            Defensa_ideal,player[10:20],]),
+            Defensa_ideal,player[40:50],player[50:60],player[60:70],player[70:80]]),
         ('Medio', [
-            Medio_ideal,player[20:30],]),
+            Medio_ideal,player[80:90],player[90:100],player[100:110],player[110:120]]),
     ('Delantero', [
-            Delantero_ideal,player[30:40],])
+            Delantero_ideal,player[120:130],player[130:140],player[140:150],player[150:160]])
     ]
     return data
 
 def create_player(player):
-    posiciones = ["Portero", "Defensa", "Medio", "Delantero"]
+    posiciones = ["Portero 1", "Portero 2", "Portero 3", "Portero 4", "Defensa 1", "Defensa 2", "Defensa 3", "Defensa 4"
+                  ,  "Medio 1", "Medio 2", "Medio 3", "Medio 4", "Delantero 1", "Delantero 2", "Delantero 3", "Delantero 4"]
     mejores_jugadores=[]
+    playerflatten= list(chain.from_iterable(player))
+    # print(playerflatten.__len__() )
     for posicion in posiciones:
-        caracteristicas = player[(posiciones.index(posicion))]
-        for caracteristica, valor in caracteristicas.items():
+        # print(posicion)
+        caracteristicas = playerflatten[(posiciones.index(posicion))]
+        
+        # print(caracteristicas)
+        for caracteristica,valor in caracteristicas.items():
+            # print(caracteristica)
             mejores_jugadores.append(valor)
             
             
@@ -155,7 +163,9 @@ if __name__ == '__main__':
     theta = radar_factory(N, frame='polygon')
     player =[]
     player=genetico(0.4,10)
+    # print(player.__len__())
     players=create_player(player)
+    print(players.__len__())
     data = example_data(players)
     spoke_labels = data.pop(0)
 
