@@ -128,14 +128,15 @@ def example_data(player):
     #  4)Inclusion of both gas-phase species is present...
     data = [
         ['Altura', 'Agilidad', 'Reflejos', 'Velocidad', 'Técnica', 'Visión', 'Físico', 'PPP', 'Distancia de lanzamiento','Distancia de tiro'],
-        ('Portero', [
-            Portero_ideal,player[0:10],player[10:20],player[20:30],player[30:40]]),
+        
         ('Defensa', [
             Defensa_ideal,player[40:50],player[50:60],player[60:70],player[70:80]]),
+        ('Portero', [
+            Portero_ideal,player[0:10]]),
         ('Medio', [
             Medio_ideal,player[80:90],player[90:100],player[100:110],player[110:120]]),
     ('Delantero', [
-            Delantero_ideal,player[120:130],player[130:140],player[140:150],player[150:160]])
+            Delantero_ideal,player[120:130],player[130:140]])
     ]
     return data
 
