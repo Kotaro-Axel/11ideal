@@ -56,6 +56,6 @@ class JugadorIdeal :
 
     def __init__(self):
         self.Portero = self.Portero
-        self.Defensa = self.Portero
-        self.Medio = self.Portero
-        self.Delantero = self.Portero
+        self.Defensa = self.Defensa
+        self.Medio = self.Medio
+        self.Delantero = self.Delantero

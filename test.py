@@ -33,6 +33,7 @@ def jugador_mas_similar(jugadores, jugador_ideal):
         similitud = 0
         for caracteristica in GENES:
                 similitud += abs(jugador[caracteristica] - jugador_ideal[caracteristica])
+                # print(caracteristica, jugador[caracteristica], jugador_ideal[caracteristica], similitud)
         if similitud > similitud_max:
             similitud_max = similitud
             jugador_mas_similar = jugador
@@ -59,6 +60,7 @@ generar_individuos()
 def seleccion():
     conjunto1 = Poblacion[(random.randint(0, len(Poblacion)-1))]
     conjunto2 = Poblacion[(random.randint(0, len(Poblacion)-1))]
+    # print(conjunto1, conjunto2)
     return conjunto1, conjunto2
             
 
@@ -85,7 +87,7 @@ def mutacion(equipo, probabilidad_mutacion):
 def genetico(probabilidad_mutacion, num_generaciones):
 
     for generacion in range(num_generaciones):
-        
+        print("Generacion: ", generacion)
         #Seleccion
         seleccionados = seleccion()
         #print(seleccionados,"*")
@@ -123,12 +125,4 @@ def genetico(probabilidad_mutacion, num_generaciones):
 
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 100
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
-# posiciones = ["Portero", "Defensa", "Medio", "Delantero"]
-# print("Equipo:")
-
-# for posicion in posiciones:
-#     caracteristicas = mejores_jugadores[(posiciones.index(posicion))]
-#     print(f"{posicion}:")
-#     for caracteristica, valor in caracteristicas.items():
-#         print(f" - {caracteristica}: {valor:.2f}")
+# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)

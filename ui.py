@@ -107,25 +107,6 @@ def radar_factory(num_vars, frame='circle'):
 
 
 def example_data(player):
-    # The following data is from the Denver Aerosol Sources and Health study.
-    # See doi:10.1016/j.atmosenv.2008.12.017
-    #
-    # The data are pollution source profile estimates for five modeled
-    # pollution sources (e.g., cars, wood-burning, etc) that emit 7-9 chemical
-    # species. The radar charts are experimented with here to see if we can
-    # nicely visualize how the modeled source profiles change across four
-    # scenarios:
-    #  1) No gas-phase species present, just seven particulate counts on
-    #     Sulfate
-    #     Nitrate
-    #     Elemental Carbon (EC)
-    #     Organic Carbon fraction 1 (OC)
-    #     Organic Carbon fraction 2 (OC2)
-    #     Organic Carbon fraction 3 (OC3)
-    #     Pyrolyzed Organic Carbon (OP)
-    #  2)Inclusion of gas-phase specie carbon monoxide (CO)
-    #  3)Inclusion of gas-phase specie ozone (O3).
-    #  4)Inclusion of both gas-phase species is present...
     data = [
         ['Altura', 'Agilidad', 'Reflejos', 'Velocidad', 'Técnica', 'Visión', 'Físico', 'PPP', 'Distancia de lanzamiento','Distancia de tiro'],
         
@@ -136,7 +117,7 @@ def example_data(player):
         ('Medio', [
             Medio_ideal,player[80:90],player[90:100],player[100:110],player[110:120]]),
     ('Delantero', [
-            Delantero_ideal,player[120:130],player[130:140]])
+            Delantero_ideal,player[120:130],player[140:150]])
     ]
     return data
 
@@ -147,10 +128,10 @@ def create_player(player):
     playerflatten= list(chain.from_iterable(player))
     # print(playerflatten.__len__() )
     for posicion in posiciones:
-        # print(posicion)
+        print(posicion)
         caracteristicas = playerflatten[(posiciones.index(posicion))]
         
-        # print(caracteristicas)
+        print(caracteristicas)
         for caracteristica,valor in caracteristicas.items():
             # print(caracteristica)
             mejores_jugadores.append(valor)
@@ -174,7 +155,6 @@ def main(probabilidad,generaciones):
     fig.subplots_adjust(wspace=0.75, hspace=0.20, top=0.85, bottom=0.05)
 
     colors = ['b', 'r', 'g', 'm', 'y']
-    # Plot the four cases from the example data on separate axes
     for ax, (title, case_data) in zip(axs.flat, data):
         ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
         ax.set_title(title, weight='bold', size='medium', position=(0.5, 1.1),
@@ -183,8 +163,6 @@ def main(probabilidad,generaciones):
             ax.plot(theta, d, color=color)
             ax.fill(theta, d, facecolor=color, alpha=0.25, label='_nolegend_')
         ax.set_varlabels(spoke_labels)
-
-    # add legend relative to top-left plot
     labels = ('modelo', 'Jugador 1', 'Jugador 2', 'Jugador 3', 'Jugador 4')
     legend = axs[0, 0].legend(labels, loc=(0.9, .95),
                               labelspacing=0.1, fontsize='small')
