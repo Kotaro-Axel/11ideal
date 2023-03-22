@@ -159,14 +159,13 @@ def create_player(player):
     return mejores_jugadores
 
 
-if __name__ == '__main__':
+def main(probabilidad,generaciones):
     N = 10
     theta = radar_factory(N, frame='polygon')
     player =[]
-    player=genetico(0.4,10)
+    player=genetico(probabilidad,generaciones)
     # print(player.__len__())
     players=create_player(player)
-    print(players.__len__())
     data = example_data(players)
     spoke_labels = data.pop(0)
 

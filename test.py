@@ -109,7 +109,6 @@ def genetico(probabilidad_mutacion, num_generaciones):
 
     mejores = []
     evaluacionesPorteros = [jugador_mas_similar(PoblacionParaEvaluarPorteros, JugadorIdeal.Portero) for jugador in range(4)]
-    print(evaluacionesPorteros.__len__())
     evaluacionesDenfensas = [jugador_mas_similar(PoblacionParaEvaluarDefensas, JugadorIdeal.Defensa) for jugador in range(4)]
     evaluacionesMedios = [jugador_mas_similar(PoblacionParaEvaluarMedios, JugadorIdeal.Medio) for jugador in range(4)]
     evaluacionesDelanteros = [jugador_mas_similar(PoblacionParaEvaluarDelanteros, JugadorIdeal.Delantero) for jugador in range(4)]
@@ -125,7 +124,6 @@ def genetico(probabilidad_mutacion, num_generaciones):
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 100
 mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
-print(mejores_jugadores.__len__())
 # posiciones = ["Portero", "Defensa", "Medio", "Delantero"]
 # print("Equipo:")
 
