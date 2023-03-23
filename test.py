@@ -57,7 +57,16 @@ def generar_individuos():
         inicio += 4
         extremo += 4
 
-generar_individuos()
+def generacionIndividual(cantidad=2, tam=50):
+    equipos = []
+    for individuo in range(cantidad):
+        equipo = [generar_jugador() for _ in range(tam)]
+        equipos.append(equipo)
+    print("Cantidad equipos : ", len(equipos))
+    print("Jugadores por rquipo : ", len(equipos[0]))
+    return equipos
+
+Poblacion = generacionIndividual(2,50)
 
 def seleccion():
     conjunto1 = Poblacion[(random.randint(0, len(Poblacion)-1))]
