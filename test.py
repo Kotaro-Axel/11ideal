@@ -30,16 +30,19 @@ def jugador_mas_similar(jugadores, jugador_ideal):
     indice = 0
 
     for jugador in jugadores:
-        similitud = 0
+        similitud = np.float64(0)
         for caracteristica in GENES:
-                similitud += abs(jugador[caracteristica] - jugador_ideal[caracteristica])
-                # print(caracteristica, jugador[caracteristica], jugador_ideal[caracteristica], similitud)
+                simprev=(jugador_ideal[caracteristica]-jugador[caracteristica])
+                similitud += max(simprev,0)
+                # print(similitud)
+                print(caracteristica, jugador[caracteristica], jugador_ideal[caracteristica], similitud)
         if similitud > similitud_max:
             similitud_max = similitud
             jugador_mas_similar = jugador
             jugadores.pop(indice)
         indice+=1
     return jugador_mas_similar
+
 
 GenerarJugadores = [generar_jugador() for _ in range(40)]
 Poblacion = []
@@ -145,6 +148,6 @@ def genetico(probabilidad_mutacion, num_generaciones):
 
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 100
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
-print(mejores_jugadores)
+# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
+# print(mejores_jugadores)
 

@@ -125,7 +125,7 @@ def create_player(player):
     posiciones = ["Portero 1", "Portero 2", "Portero 3", "Portero 4", "Defensa 1", "Defensa 2", "Defensa 3", "Defensa 4"
                   ,  "Medio 1", "Medio 2", "Medio 3", "Medio 4", "Delantero 1", "Delantero 2", "Delantero 3", "Delantero 4"]
     mejores_jugadores=[]
-    playerflatten= list(chain.from_iterable(player))
+    playerflatten= list(chain.from_iterable(player[0]))
     # print(playerflatten.__len__() )
     for posicion in posiciones:
         print(posicion)
