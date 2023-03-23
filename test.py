@@ -76,12 +76,18 @@ def seleccion():
             
 
 def cruza(padre,madre, np):
-    padre1 = padre[:2]
-    padre2 = padre[2:4]
-    madre1 = madre[:2]
-    madre2 = madre[2:4]
+
+    inicio = 0
+    extremo = int((len(padre) / 2))
+    final = len(padre)
+
+    padre1 = padre[inicio:extremo-1]
+    padre2 = padre[extremo:final-1]
+    madre1 = madre[inicio:extremo-1]
+    madre2 = madre[extremo:final-1]
     hijo1 = padre2 + madre1
     hijo2 = madre2 + padre1
+    
     np.append(hijo1)
     np.append(hijo2)
 
@@ -157,6 +163,6 @@ def genetico(probabilidad_mutacion, num_generaciones):
 
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 100
-# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
+mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
 # print(mejores_jugadores)
 
