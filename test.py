@@ -12,7 +12,6 @@ Modelo = JugadorIdeal
 Jugador = {
     "atributos":GENES
 }
-Jugadores = []
 
 # definir la población
 def generar_jugador():
@@ -21,8 +20,7 @@ def generar_jugador():
         jugador[posicion] = {}
         for caracteristica in caracteristicas:
             jugador[posicion][caracteristica] = np.round(random.uniform(0.69, 0.99),2)
-    Jugadores.append(jugador.get("atributos"))
-    return jugador
+    return jugador.get("atributos")
 
 def jugador_mas_similar(jugadores, jugador_ideal):
     similitud_max = -math.inf
@@ -43,21 +41,7 @@ def jugador_mas_similar(jugadores, jugador_ideal):
         indice+=1
     return jugador_mas_similar
 
-
-GenerarJugadores = [generar_jugador() for _ in range(40)]
-Poblacion = []
-
-def generar_individuos():
-    cantidad_jugadores = 4
-    inicio = 0
-    extremo = 4
-    cantidad_equipos = int(len(Jugadores) / cantidad_jugadores)
-    for a in range(cantidad_equipos):
-        Poblacion.append(Jugadores[inicio:extremo])
-        inicio += 4
-        extremo += 4
-
-def generacionIndividual(cantidad=2, tam=50):
+def generacionIndividual(cantidad, tam):
     equipos = []
     for individuo in range(cantidad):
         equipo = [generar_jugador() for _ in range(tam)]
@@ -66,36 +50,27 @@ def generacionIndividual(cantidad=2, tam=50):
     print("Jugadores por rquipo : ", len(equipos[0]))
     return equipos
 
-Poblacion = generacionIndividual(2,50)
 
 def seleccion():
     conjunto1 = Poblacion[(random.randint(0, len(Poblacion)-1))]
     conjunto2 = Poblacion[(random.randint(0, len(Poblacion)-1))]
-    # print(conjunto1, conjunto2)
-    return conjunto1, conjunto2
-            
+    return conjunto1, conjunto2 
 
-def cruza(padre,madre, np):
+def cruza(padre1,padre2):
+    n = len(padre1)
+    punto1 = random.randint(0, n-1)
+    punto2 = random.randint(0, n-1)
+    punto3 = random.randint(0, n-1)
+    punto4 = random.randint(0, n-1)
+    puntos = sorted([punto1, punto2, punto3, punto4])
+    hijo1 = padre1[:puntos[0]] + padre2[puntos[0]:puntos[1]] + padre1[puntos[1]:puntos[2]] + padre2[puntos[2]:puntos[3]] + padre1[puntos[3]:]
+    hijo2 = padre2[:puntos[0]] + padre1[puntos[0]:puntos[1]] + padre2[puntos[1]:puntos[2]] + padre1[puntos[2]:puntos[3]] + padre2[puntos[3]:]
+    return [hijo1, hijo2]
 
-    inicio = 0
-    extremo = int((len(padre) / 2))
-    final = len(padre)
-
-    padre1 = padre[inicio:extremo-1]
-    padre2 = padre[extremo:final-1]
-    madre1 = madre[inicio:extremo-1]
-    madre2 = madre[extremo:final-1]
-    hijo1 = padre2 + madre1
-    hijo2 = madre2 + padre1
-    
-    np.append(hijo1)
-    np.append(hijo2)
-
-def mutacion(equipo, probabilidad_mutacion):
+def mutacion(individuo, probabilidad_mutacion):
     if random.random() < probabilidad_mutacion:
-        equipo.pop(1)
-        equipo.insert(1, generar_jugador().get("atributos"))
-    return equipo
+        random.shuffle(individuo)
+    return individuo
 
 def diferencias(generaciones):
     poblacionPt = generaciones[0].copy()
@@ -117,10 +92,10 @@ def diferencias(generaciones):
     return mejores
         
 
-def genetico(probabilidad_mutacion, num_generaciones):
+def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
     generaciones = []
-
+    print(len(Poblacion))
 
     for generacion in range(num_generaciones):
         #Seleccion
@@ -128,41 +103,43 @@ def genetico(probabilidad_mutacion, num_generaciones):
         #print(seleccionados,"*")
         
         #Cruza
-        nueva_poblacion = []
         padre = seleccionados[1]
         madre = seleccionados[0]
-        hijo = cruza(padre, madre, nueva_poblacion)
+        #hijo = cruzar(padre,madre,nueva_poblacion)
+        hijo = cruza(padre, madre)
 
         #Mutación
-        for i in range(len(nueva_poblacion)):
-            nueva_poblacion[i] = mutacion(nueva_poblacion[i], probabilidad_mutacion)
+        for i in range(len(hijo)):
+            hijo[i] = mutacion(hijo[i], probabilidad_mutacion)
         #Poda
-        Poblacion = seleccionados[0] + seleccionados[1] + nueva_poblacion[1] + nueva_poblacion[0]
+        Poblacion = [madre, padre , hijo[1] , hijo[0]]
         generaciones.append(Poblacion)
+
+    print(len(Poblacion))
     
-    primera_generacion = diferencias(generaciones)
+    # primera_generacion = diferencias(generaciones)
     
-    PoblacionParaEvaluarPorteros = Poblacion.copy()
-    PoblacionParaEvaluarDefensas = Poblacion.copy()
-    PoblacionParaEvaluarMedios = Poblacion.copy()
-    PoblacionParaEvaluarDelanteros = Poblacion.copy()
+    # PoblacionParaEvaluarPorteros = Poblacion.copy()
+    # PoblacionParaEvaluarDefensas = Poblacion.copy()
+    # PoblacionParaEvaluarMedios = Poblacion.copy()
+    # PoblacionParaEvaluarDelanteros = Poblacion.copy()
 
-    mejores = []
-    evaluacionesPorteros = [jugador_mas_similar(PoblacionParaEvaluarPorteros, JugadorIdeal.Portero) for jugador in range(4)]
-    evaluacionesDenfensas = [jugador_mas_similar(PoblacionParaEvaluarDefensas, JugadorIdeal.Defensa) for jugador in range(4)]
-    evaluacionesMedios = [jugador_mas_similar(PoblacionParaEvaluarMedios, JugadorIdeal.Medio) for jugador in range(4)]
-    evaluacionesDelanteros = [jugador_mas_similar(PoblacionParaEvaluarDelanteros, JugadorIdeal.Delantero) for jugador in range(4)]
+    # mejores = []
+    # evaluacionesPorteros = [jugador_mas_similar(PoblacionParaEvaluarPorteros, JugadorIdeal.Portero) for jugador in range(4)]
+    # evaluacionesDenfensas = [jugador_mas_similar(PoblacionParaEvaluarDefensas, JugadorIdeal.Defensa) for jugador in range(4)]
+    # evaluacionesMedios = [jugador_mas_similar(PoblacionParaEvaluarMedios, JugadorIdeal.Medio) for jugador in range(4)]
+    # evaluacionesDelanteros = [jugador_mas_similar(PoblacionParaEvaluarDelanteros, JugadorIdeal.Delantero) for jugador in range(4)]
     
-    mejores.append(evaluacionesPorteros)
-    mejores.append(evaluacionesDenfensas)
-    mejores.append(evaluacionesMedios)
-    mejores.append(evaluacionesDelanteros)
+    # mejores.append(evaluacionesPorteros)
+    # mejores.append(evaluacionesDenfensas)
+    # mejores.append(evaluacionesMedios)
+    # mejores.append(evaluacionesDelanteros)
 
-    return [mejores,primera_generacion]
+    # return [mejores,primera_generacion]
 
-
+Poblacion = generacionIndividual(4,20)
 PROBABILIDAD_MUTACION = 0.5
-NUM_GENERACIONES = 100
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES)
+NUM_GENERACIONES = 1
+mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
 # print(mejores_jugadores)
 
