@@ -19,14 +19,30 @@ def generar_jugador():
     for posicion, caracteristicas in Jugador.items():
         jugador[posicion] = {}
         for caracteristica in caracteristicas:
-            jugador[posicion][caracteristica] = np.round(random.uniform(0.69, 0.99),2)
+            jugador[posicion][caracteristica] = np.round(random.uniform(0.70, 0.99),2)
     return jugador.get("atributos")
+
+def aptitud(poblacion, jugador_ideal):
+    similitud_max = -math.inf
+    jugador_mas_similar = None
+    for equipo in poblacion:
+        indice = 0
+        for jugador in equipo:
+            similitud = 0
+            for caracteristica in GENES:
+                    similitud += abs(min(jugador[caracteristica] - jugador_ideal[caracteristica], 0))
+            if similitud > similitud_max:
+                similitud_max = similitud
+                print(similitud)
+                jugador_mas_similar = jugador
+                equipo.pop(indice)
+            indice+=1
+    return jugador_mas_similar
 
 def jugador_mas_similar(jugadores, jugador_ideal):
     similitud_max = -math.inf
     jugador_mas_similar = None
     indice = 0
-
     for jugador in jugadores:
         similitud = np.float64(0)
         for caracteristica in GENES:
@@ -95,7 +111,6 @@ def diferencias(generaciones):
 def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
     generaciones = []
-    print(len(Poblacion))
 
     for generacion in range(num_generaciones):
         #Seleccion
@@ -116,16 +131,15 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
         generaciones.append(Poblacion)
 
     print(len(Poblacion))
-    
     # primera_generacion = diferencias(generaciones)
     
-    # PoblacionParaEvaluarPorteros = Poblacion.copy()
+    PoblacionParaEvaluarPorteros = Poblacion.copy()
     # PoblacionParaEvaluarDefensas = Poblacion.copy()
     # PoblacionParaEvaluarMedios = Poblacion.copy()
     # PoblacionParaEvaluarDelanteros = Poblacion.copy()
 
     # mejores = []
-    # evaluacionesPorteros = [jugador_mas_similar(PoblacionParaEvaluarPorteros, JugadorIdeal.Portero) for jugador in range(4)]
+    evaluacionesPorteros = [aptitud(PoblacionParaEvaluarPorteros, JugadorIdeal.Portero) for jugador in range(4)]
     # evaluacionesDenfensas = [jugador_mas_similar(PoblacionParaEvaluarDefensas, JugadorIdeal.Defensa) for jugador in range(4)]
     # evaluacionesMedios = [jugador_mas_similar(PoblacionParaEvaluarMedios, JugadorIdeal.Medio) for jugador in range(4)]
     # evaluacionesDelanteros = [jugador_mas_similar(PoblacionParaEvaluarDelanteros, JugadorIdeal.Delantero) for jugador in range(4)]
@@ -134,12 +148,12 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
     # mejores.append(evaluacionesDenfensas)
     # mejores.append(evaluacionesMedios)
     # mejores.append(evaluacionesDelanteros)
-
+    for portero in evaluacionesPorteros:
+        print (portero)
     # return [mejores,primera_generacion]
 
 Poblacion = generacionIndividual(4,20)
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 1
 mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
-# print(mejores_jugadores)
 
