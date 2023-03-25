@@ -7,7 +7,7 @@ from matplotlib.projections.polar import PolarAxes
 from matplotlib.projections import register_projection
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
-from test import genetico
+from test import initiate_genetic
 from itertools import chain
 
 
@@ -125,26 +125,34 @@ def create_player(player):
     posiciones = ["Portero 1", "Portero 2", "Portero 3", "Portero 4", "Defensa 1", "Defensa 2", "Defensa 3", "Defensa 4"
                   ,  "Medio 1", "Medio 2", "Medio 3", "Medio 4", "Delantero 1", "Delantero 2", "Delantero 3", "Delantero 4"]
     mejores_jugadores=[]
+    # print(player[0])
     playerflatten= list(chain.from_iterable(player[0]))
     # print(playerflatten.__len__() )
     for posicion in posiciones:
-        print(posicion)
+        # print(posicion)
         caracteristicas = playerflatten[(posiciones.index(posicion))]
         
-        print(caracteristicas)
+        # print(caracteristicas)
         for caracteristica,valor in caracteristicas.items():
             # print(caracteristica)
             mejores_jugadores.append(valor)
             
             
     return mejores_jugadores
-
+def create_learning_curve(player):
+    print("hey")
+    plt.title("Magnitud de la diferencia conforme a las iteraciones")
+    plt.xlabel("Iteracion")
+    plt.ylabel("Valor de la diferencia")
+    plt.plot(player,color="red", label="Diferencia:")
+    plt.legend()
+    plt.show()
 
 def main(probabilidad,generaciones):
     N = 10
     theta = radar_factory(N, frame='polygon')
     player =[]
-    player=genetico(probabilidad,generaciones)
+    player=initiate_genetic(probabilidad,generaciones)
     # print(player.__len__())
     players=create_player(player)
     data = example_data(players)
@@ -167,8 +175,9 @@ def main(probabilidad,generaciones):
     legend = axs[0, 0].legend(labels, loc=(0.9, .95),
                               labelspacing=0.1, fontsize='small')
 
-    fig.text(0.5, 0.965, 'Comparativa de jugadores',
+    fig.text(0.5, 0.965, 'Mejor generación de jugadores vs jugador ideal',
              horizontalalignment='center', color='black', weight='bold',
              size='large')
 
     plt.show()
+    create_learning_curve(player[1])

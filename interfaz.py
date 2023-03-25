@@ -4,7 +4,6 @@ from ui import main
 def send_data():
   prob_info = prob.get()
   generaciones_info = generaciones.get()
-
   main(prob_info, generaciones_info)
 
 if __name__ == "__main__": 

@@ -63,7 +63,7 @@ def jugador_mas_similar(jugadores, jugador_ideal):
                 simprev=(jugador_ideal[caracteristica]-jugador[caracteristica])
                 similitud += max(simprev,0)
                 # print(similitud)
-                print(caracteristica, jugador[caracteristica], jugador_ideal[caracteristica], similitud)
+                # print(caracteristica, jugador[caracteristica], jugador_ideal[caracteristica], similitud)
         if similitud > similitud_max:
             similitud_max = similitud
             jugador_mas_similar = jugador
@@ -76,8 +76,8 @@ def generacionIndividual(cantidad, tam):
     for individuo in range(cantidad):
         equipo = [generar_jugador() for _ in range(tam)]
         equipos.append(equipo)
-    print("Cantidad equipos : ", len(equipos))
-    print("Jugadores por rquipo : ", len(equipos[0]))
+    # print("Cantidad equipos : ", len(equipos))
+    # print("Jugadores por rquipo : ", len(equipos[0]))
     return equipos
 
 
@@ -170,7 +170,7 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
 
     mejor = min(aprendizaje)
-    mejor_generacion = aprendizaje.index(mejor)
+    mejor_generacion = generaciones[(aprendizaje.index(mejor))]
 
     UltimaGeneracion = Poblacion.copy()
 
@@ -184,8 +184,12 @@ Poblacion = generacionIndividual(4,20)
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 20
 
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+def initiate_genetic(PROBABILIDAD_MUTACION, NUM_GENERACIONES):
+    mejores_jugadores=genetico(PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+    return mejores_jugadores
 
-mejor_generacion = mejores_jugadores[0]
-curva_aprendizaje = mejores_jugadores[1]
+# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+
+# mejor_generacion = mejores_jugadores[0]
+# curva_aprendizaje = mejores_jugadores[1]
 
