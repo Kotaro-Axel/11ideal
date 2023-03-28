@@ -84,7 +84,7 @@ def jugador_mas_similar(jugadores, jugador_ideal):
         indice+=1
     return jugador_mas_similar
 
-def generacionIndividual(cantidad, tam):
+def generacionIndividual(cantidad):
     equipos = []
     defensas = 4    
     medios = 4
@@ -123,12 +123,6 @@ def generacionIndividual(cantidad, tam):
         randomize = equipo.copy() 
         random.shuffle(randomize)
         equipos.append(randomize)
-    
-    print(equipos[1][1].__eq__(equipos[3][1]))
-    print(equipos[1])
-    print(equipos[3])
-
-
 
     return equipos
 
@@ -164,6 +158,33 @@ def cruza(padre1,padre2):
     hijo1 = padre1[:puntos[0]] + padre2[puntos[0]:puntos[1]] + padre1[puntos[1]:puntos[2]] + padre2[puntos[2]:puntos[3]] + padre1[puntos[3]:]
     hijo2 = padre2[:puntos[0]] + padre1[puntos[0]:puntos[1]] + padre2[puntos[1]:puntos[2]] + padre1[puntos[2]:puntos[3]] + padre2[puntos[3]:]
     return [hijo1, hijo2]
+
+def cruza2(parent1, parent2):
+    # 2 puntos de cruza entre el rango [1, 42]
+    point1 = random.randint(1, 42)
+    point2 = random.randint(point1 + 1, 43)
+
+    # copiar los 2 padres
+    child1 = parent1.copy()
+    child2 = parent2.copy()
+
+    for i in range(point1, point2):
+        idx = [d['id'] for d in parent2].index(parent1[i]['id'])
+        child1[i], child2[idx] = child2[idx], child1[i]
+
+    for child in [child1, child2]:
+        ids_seen = set()
+        for i, d in enumerate(child):
+            if d['id'] in ids_seen:
+                max_id = max(ids_seen)
+                unused_id = max_id + 1
+                while unused_id in ids_seen:
+                    unused_id += 1
+                child[i]['id'] = unused_id
+            else:
+                ids_seen.add(d['id'])
+
+    return [child1, child2]
 
 def mutacion(individuo, probabilidad_mutacion):
     if random.random() < probabilidad_mutacion:
@@ -203,7 +224,7 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
         padre = seleccionados[1]
         madre = seleccionados[0]
         #hijo = cruzar(padre,madre,nueva_poblacion)
-        hijo = cruza(padre, madre)
+        hijo = cruza2(padre, madre)
 
         #Mutación
         for i in range(len(hijo)):
@@ -232,15 +253,16 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
     return [mejor_generacion,aprendizaje]
 
-Poblacion = generacionIndividual(10,20)
+Poblacion = generacionIndividual(10)
 PROBABILIDAD_MUTACION = 0.5
-NUM_GENERACIONES = 20
+NUM_GENERACIONES = 1
 
 def initiate_genetic(PROBABILIDAD_MUTACION, NUM_GENERACIONES):
     mejores_jugadores=genetico(PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
     return mejores_jugadores
 
-# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+
+#mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
 
 # mejor_generacion = mejores_jugadores[0]
 # curva_aprendizaje = mejores_jugadores[1]
