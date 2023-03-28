@@ -14,6 +14,19 @@ Jugador = {
 }
 
 # definir la población
+def generar_player(ideal):
+    jugador = {}
+    for posicion, caracteristicas in Jugador.items():
+        jugador[posicion] = {}
+        for caracteristica in caracteristicas:
+            jugador[posicion][caracteristica] = np.round(
+                random.uniform(ideal[caracteristica]-0.1, ideal[caracteristica]+0.1),2
+                )
+            #jugador[posicion]['id'] = 5
+    return jugador.get("atributos")
+    
+
+
 def generar_jugador():
     jugador = {}
     for posicion, caracteristicas in Jugador.items():
@@ -73,11 +86,50 @@ def jugador_mas_similar(jugadores, jugador_ideal):
 
 def generacionIndividual(cantidad, tam):
     equipos = []
-    for individuo in range(cantidad):
-        equipo = [generar_jugador() for _ in range(tam)]
-        equipos.append(equipo)
-    # print("Cantidad equipos : ", len(equipos))
-    # print("Jugadores por rquipo : ", len(equipos[0]))
+    defensas = 4    
+    medios = 4
+    delanteros = 2
+    portero = 1
+
+    equipo = []
+    index = 1
+    for plantilla in range(4):
+        for defensa in range(defensas):
+            jugador = generar_player(Modelo.Defensa)
+            jugador["id"] = index
+            equipo.append(jugador)
+            index+=1
+
+        for medio in range(medios):
+            jugador = generar_player(Modelo.Medio)
+            jugador["id"] = index
+            equipo.append(jugador)
+            index+=1
+
+        for medio in range(delanteros):
+            jugador = generar_player(Modelo.Delantero)
+            jugador["id"] = index
+            equipo.append(jugador)
+            index+=1
+
+        for medio in range(portero):
+            jugador = generar_player(Modelo.Portero)
+            jugador["id"] = index
+            equipo.append(jugador)
+            index+=1
+
+
+    for team in range(cantidad):
+        randomize = equipo.copy() 
+        random.shuffle(randomize)
+        equipos.append(randomize)
+    
+    print(equipos[1][1].__eq__(equipos[3][1]))
+    print(equipos[1])
+    print(equipos[3])
+
+
+
     return equipos
 
 
@@ -180,7 +232,7 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
     return [mejor_generacion,aprendizaje]
 
-Poblacion = generacionIndividual(4,20)
+Poblacion = generacionIndividual(10,20)
 PROBABILIDAD_MUTACION = 0.5
 NUM_GENERACIONES = 20
 
