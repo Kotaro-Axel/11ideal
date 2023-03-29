@@ -256,9 +256,28 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
                 # print("Habrá mutación en el hijo ",i)
                 hijo[i] = mutacion(hijo[i], probabilidad_mutacion)
         #Poda
-        Poblacion.append(hijo[1])  
-        Poblacion.append(hijo[0])
-        poda(Poblacion)
+
+        # Poblacion.append(hijo[0])
+        # Poblacion.append(hijo[1])
+
+        #mejor = min(individuos)
+        #indice_mejor = individuos.index(mejor)
+        
+        # print(len(Poblacion))
+        # while len(Poblacion) >= 15:
+            # aptitudesaux=[]
+            # for equipo in Poblacion:
+            #     aptitudesaux.append(aptitud(equipo, Modelo.Defensa, Modelo.Medio, Modelo.Delantero, Modelo.Portero))
+            # podar=max(aptitudesaux)
+            # print(podar)
+            # indexpoda=aptitudesaux.index(podar)
+            # print(indexpoda)
+            # Poblacion.pop(indexpoda)
+            # Poblacion
+        Poblacion=[padre,madre,hijo[0],hijo[1]]
+        # #Poblacion.append(hijo[1])  
+        #Poblacion.append(hijo[0])
+        #poda(Poblacion)
         generaciones.append(Poblacion)
     
     i=0

@@ -24,7 +24,7 @@ class JugadorIdeal :
         "visión":0.75,
         "fisico":0.90, 
         "ppp":0.75, 
-        "distancia_de_lanzamiento":0.50, 
+        "distancia_de_lanzamiento":0.70, 
         "distancia_de_tiro":0.80
     }
 
@@ -37,7 +37,7 @@ class JugadorIdeal :
         "visión":0.90,
         "fisico":0.75, 
         "ppp":0.90, 
-        "distancia_de_lanzamiento":0.50, 
+        "distancia_de_lanzamiento":0.70, 
         "distancia_de_tiro":0.75
     }
 
@@ -50,7 +50,7 @@ class JugadorIdeal :
         "visión":0.80,
         "fisico":0.85, 
         "ppp":0.70, 
-        "distancia_de_lanzamiento":0.10, 
+        "distancia_de_lanzamiento":0.70, 
         "distancia_de_tiro":0.90
     }
 
