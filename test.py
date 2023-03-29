@@ -258,11 +258,11 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
             j+=1
             aptitudEquipo = aptitud(equipo, Modelo.Defensa, Modelo.Medio, Modelo.Delantero, Modelo.Portero)
             # print(equipo,"\n","Aptitud: ",aptitudEquipo,"\n")
-            print("Aptitud: ","equipo ", j,aptitudEquipo,"\n")
+            # print("Aptitud: ","equipo ", j,aptitudEquipo,"\n")
         
             aprendizaje.append(aptitudEquipo)
         
-        print(i)
+        # print(i)
         i+=1
     # print(aprendizaje)
 
@@ -288,7 +288,7 @@ NUM_GENERACIONES = 100
 
 def initiate_genetic(PROBABILIDAD_MUTACION, NUM_GENERACIONES):
     mejores_jugadores=genetico(PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
-    print(mejores_jugadores[1])
+    # print(mejores_jugadores[1])
     return mejores_jugadores
 
 

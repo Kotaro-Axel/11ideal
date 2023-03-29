@@ -142,8 +142,8 @@ def create_player(player):
     return mejores_jugadores
 def create_learning_curve(player):
     # print("hey")
-    # mejorgen=min(player[0])
-    # print("La mejor generacion es la: ",player.index(mejorgen))
+    mejorgen=min(player[0])
+    print("La mejor generacion es la: ",player[0].index(mejorgen))
     plt.title("Magnitud de la diferencia conforme a las iteraciones")
     plt.xlabel("Iteracion")
     plt.ylabel("Valor de la diferencia")
