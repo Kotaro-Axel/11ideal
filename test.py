@@ -106,13 +106,13 @@ def generacionIndividual(cantidad):
             equipo.append(jugador)
             index+=1
 
-        for medio in range(delanteros):
+        for delantero in range(delanteros):
             jugador = generar_player(Modelo.Delantero)
             jugador["id"] = index
             equipo.append(jugador)
             index+=1
 
-        for medio in range(portero):
+        for portero in range(portero):
             jugador = generar_player(Modelo.Portero)
             jugador["id"] = index
             equipo.append(jugador)
@@ -221,6 +221,19 @@ def diferencias(generaciones):
 
     return mejores
         
+def poda(generacion):
+
+    poblacion_maxima = 15
+    top = len(generacion)
+    aptitudes = []
+
+    for equipo in generacion:
+        aptitudes.append(aptitud(equipo, Modelo.Defensa, Modelo.Medio, Modelo.Delantero, Modelo.Portero))
+    aptitudes = sorted(aptitudes)
+
+    while top >= poblacion_maxima:
+        generacion.pop()
+        top = len(generacion)
 
 def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
 
@@ -243,7 +256,9 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
                 # print("Habrá mutación en el hijo ",i)
                 hijo[i] = mutacion(hijo[i], probabilidad_mutacion)
         #Poda
-        Poblacion = [madre, padre , hijo[1] , hijo[0]]
+        Poblacion.append(hijo[1])  
+        Poblacion.append(hijo[0])
+        poda(Poblacion)
         generaciones.append(Poblacion)
     
     i=0
