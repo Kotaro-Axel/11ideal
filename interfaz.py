@@ -20,7 +20,7 @@ if __name__ == "__main__":
     prob_label.place(x = 22, y = 310)
     generaciones_label = Label(frame_izquierda, text = "Numero de generaciones")
     generaciones_label.place(x = 22, y = 370)
-    prob = IntVar()
+    prob = DoubleVar()
     generaciones = IntVar()
     prob_entry = Entry(frame_izquierda, textvariable = prob, width = 40)
     generaciones_entry = Entry(frame_izquierda, textvariable = generaciones, width = 40)

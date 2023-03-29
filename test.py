@@ -246,22 +246,33 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
         Poblacion = [madre, padre , hijo[1] , hijo[0]]
         generaciones.append(Poblacion)
     
-    aprendizaje = []
-
+    i=0
+    aptitudesmejor=[]
+    aptitudespeor=[]
+    aptitudesmedio=[]
     for poblacion in generaciones:
+        aprendizaje = []
         aptitudEquipo = 0
-        i=0
+        j=0
         for equipo in poblacion:
-
+            j+=1
             aptitudEquipo = aptitud(equipo, Modelo.Defensa, Modelo.Medio, Modelo.Delantero, Modelo.Portero)
             # print(equipo,"\n","Aptitud: ",aptitudEquipo,"\n")
-            # print("Aptitud: ","equipo ", i,aptitudEquipo,"\n")
-            i+=1
-        aprendizaje.append(aptitudEquipo)
-
+            print("Aptitud: ","equipo ", j,aptitudEquipo,"\n")
+        
+            aprendizaje.append(aptitudEquipo)
+        
+        print(i)
+        i+=1
     # print(aprendizaje)
 
-    mejor = min(aprendizaje)
+        aptitudesmejor.append(min(aprendizaje))
+        aptitudespeor.append(max(aprendizaje))
+        aptitudesmedio.append(np.mean(aprendizaje))
+    
+    mejor=min(aptitudesmejor)
+    aptitudes=[aptitudesmejor,aptitudespeor,aptitudesmedio]
+    
     mejor_generacion = generaciones[(aprendizaje.index(mejor))]
 
     UltimaGeneracion = Poblacion.copy()
@@ -269,7 +280,7 @@ def genetico(probabilidad_mutacion, num_generaciones, Poblacion):
     for equipo in UltimaGeneracion:
         aptitud(equipo, Modelo.Defensa, Modelo.Medio, Modelo.Delantero, Modelo.Portero)
 
-    return [mejor_generacion,aprendizaje]
+    return [mejor_generacion,aptitudes]
 
 Poblacion = generacionIndividual(10)
 PROBABILIDAD_MUTACION = 0.5
@@ -277,11 +288,12 @@ NUM_GENERACIONES = 100
 
 def initiate_genetic(PROBABILIDAD_MUTACION, NUM_GENERACIONES):
     mejores_jugadores=genetico(PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
-    # print(mejores_jugadores[1])
+    print(mejores_jugadores[1])
     return mejores_jugadores
 
 
-mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+# print(len(mejores_jugadores[0][0]))
 
 # print(mejores_jugadores[1])
 # mejor_generacion = mejores_jugadores[0]
