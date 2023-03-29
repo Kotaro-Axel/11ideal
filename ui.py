@@ -136,11 +136,12 @@ def create_player(player):
         for caracteristica,valor in caracteristicas.items():
             # print(caracteristica)
             mejores_jugadores.append(valor)
-            
+        mejores_jugadores.pop()
+        
             
     return mejores_jugadores
 def create_learning_curve(player):
-    print("hey")
+    # print("hey")
     plt.title("Magnitud de la diferencia conforme a las iteraciones")
     plt.xlabel("Iteracion")
     plt.ylabel("Valor de la diferencia")
@@ -152,6 +153,7 @@ def main(probabilidad,generaciones):
     N = 10
     theta = radar_factory(N, frame='polygon')
     player =[]
+    # probabilidad,generaciones=0.5,10
     player=initiate_genetic(probabilidad,generaciones)
     # print(player.__len__())
     players=create_player(player)
@@ -160,7 +162,7 @@ def main(probabilidad,generaciones):
 
     fig, axs = plt.subplots(figsize=(9, 9), nrows=2, ncols=2,
                             subplot_kw=dict(projection='radar'))
-    fig.subplots_adjust(wspace=0.75, hspace=0.20, top=0.85, bottom=0.05)
+    fig.subplots_adjust(wspace=0.75, hspace=0.50, top=0.85, bottom=0.05)
 
     colors = ['b', 'r', 'g', 'm', 'y']
     for ax, (title, case_data) in zip(axs.flat, data):
@@ -181,3 +183,4 @@ def main(probabilidad,generaciones):
 
     plt.show()
     create_learning_curve(player[1])
+# main(0.5,10)
