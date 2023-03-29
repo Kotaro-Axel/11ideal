@@ -187,9 +187,22 @@ def cruza2(parent1, parent2):
     return [child1, child2]
 
 def mutacion(individuo, probabilidad_mutacion):
-    if random.random() < probabilidad_mutacion:
-        random.shuffle(individuo)
-    return individuo
+    mutaciones = []
+    for i in range(len(individuo)):
+        nuevoGen = ""
+        for x in range(len(individuo[i])):
+            random = random.randint(0, 100)
+            if(random < probabilidad_mutacion*100):
+                digito = individuo[i][x]
+                if(str(digito) == "0"):
+                    nuevoGen += "1"
+                else:
+                    nuevoGen += "0"
+            else:
+                digito = individuo[i][x]
+                nuevoGen += str(digito)
+            mutaciones.append(nuevoGen)
+    return mutaciones    
 
 def diferencias(generaciones):
     poblacionPt = generaciones[0].copy()
