@@ -93,6 +93,7 @@ def generacionIndividual(cantidad):
 
     equipo = []
     index = 1
+
     for plantilla in range(4):
         for defensa in range(defensas):
             jugador = generar_player(Modelo.Defensa)
@@ -112,12 +113,10 @@ def generacionIndividual(cantidad):
             equipo.append(jugador)
             index+=1
 
-        for portero in range(portero):
-            jugador = generar_player(Modelo.Portero)
-            jugador["id"] = index
-            equipo.append(jugador)
-            index+=1
-    # print(len(equipo))
+        jugador = generar_player(Modelo.Portero)
+        jugador["id"] = index
+        equipo.append(jugador)
+        index+=1
 
     for team in range(cantidad):
         randomize = equipo.copy() 
@@ -147,7 +146,7 @@ def seleccion(Poblacion):
     indice_mejor = individuos.index(mejor)
     conjunto2 = Poblacion[indice_mejor]
 
-    return conjunto1, conjunto2 
+    return [conjunto1, conjunto2] 
 
 def cruza(padre1,padre2):
     n = len(padre1)
@@ -161,6 +160,8 @@ def cruza(padre1,padre2):
     return [hijo1, hijo2]
 
 def cruza2(parent1, parent2):
+
+
     # 2 puntos de cruza entre el rango [1, 42]
     point1 = random.randint(1, 42)
     point2 = random.randint(point1 + 1, 43)
@@ -184,7 +185,6 @@ def cruza2(parent1, parent2):
                 child[i]['id'] = unused_id
             else:
                 ids_seen.add(d['id'])
-
     return [child1, child2]
 
 def mutacion(individuo, probabilidad_mutacion):
@@ -307,7 +307,7 @@ def initiate_genetic(PROBABILIDAD_MUTACION, NUM_GENERACIONES):
     return mejores_jugadores
 
 
-# mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
+mejores_jugadores = genetico( PROBABILIDAD_MUTACION, NUM_GENERACIONES, Poblacion)
 # print(len(mejores_jugadores[0][0]))
 
 # print(mejores_jugadores[1])
